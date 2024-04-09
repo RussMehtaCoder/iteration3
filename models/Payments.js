@@ -5,18 +5,30 @@ const paymentSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      unique: true
+      unique: false,
+      sparse: true
     },
     lastName: {
       type: String,
       required: true,
-      unique: true
+      unique: false,
+      sparse: true
     },
     paid: {
       type: Boolean,
       required: true,
-      default: false
-    }
+      default: false,
+      sparse: true
+    },
+
+    paymentTitle: {
+      type: String,
+      required: true,
+      default: false,
+      sparse: true
+    },
+
+
   },
   { timestamps: true }
 );

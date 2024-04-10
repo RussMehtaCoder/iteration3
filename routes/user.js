@@ -37,6 +37,60 @@ router.get('/getuserinfo', backendFunc.getUserInfo, (req, res) => {
 });
 
 
+router.get('/getmemberlist', backendFunc.getMemberList, (req, res) => {
+  // console.log(req.user);
+  // console.log(req.user.paymentArr);
+  // Constructing the response object
+  // const response = {
+  //   user: req.user,
+  //   payments: req.user.paymentArr
+  // };
+
+  // Sending the response as JSON
+  res.json(res.finalReturn);
+
+  // res.json(req.user)
+  // res.json({ message: `${req.payment.firstName} ${req.payment.lastName} paid for ${req.payment.paymentTitle}` });
+});
+
+
+router.post('/sendmessage', backendFunc.sendMessage, (req, res) => {
+  // console.log(req.user);
+  // console.log(req.user.paymentArr);
+  // Constructing the response object
+  // const response = {
+  //   user: req.user,
+  //   payments: req.user.paymentArr
+  // };
+
+  // Sending the response as JSON
+  res.json(req.messageData);
+
+  // res.json(req.user)
+  // res.json({ message: `${req.payment.firstName} ${req.payment.lastName} paid for ${req.payment.paymentTitle}` });
+});
+
+
+
+router.get('/getstatement', backendFunc.getStatement, (req, res) => {
+  // console.log(req.user);
+  // console.log(req.user.paymentArr);
+  // Constructing the response object
+  // const response = {
+  //   user: req.user,
+  //   payments: req.user.paymentArr
+  // };
+
+  // Sending the response as JSON
+  res.json(req.finalData);
+
+  // res.json(req.user)
+  // res.json({ message: `${req.payment.firstName} ${req.payment.lastName} paid for ${req.payment.paymentTitle}` });
+});
+
+
+
+
 
 
 // router.post('/makePayment', authenticate, (req, res) => {

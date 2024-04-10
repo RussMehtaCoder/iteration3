@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
       memberEntry = new Payment({ firstName, lastName, paid: false, paymentTitle: "Practice" });
     } else if (role == "treasurer") {
       coachEntry = new Payment({ firstName, lastName, paid: false, paymentTitle: "Coach" });
-      hallEntry = new Payment({ firstName: first, lastName, paid: false, paymentTitle: "Hall" });
+      hallEntry = new Payment({ firstName: firstName, lastName, paid: false, paymentTitle: "Hall" });
     } 
 
     if (memberEntry) {
@@ -166,6 +166,37 @@ const makePayment = async (req, res, next) => {
 };
 
 
+
+
+const getUserInfo = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    req.user = await backendAuth.authenticateToken(token);
+   // payment title 
+    const { paymentTitle } = req.body;
+
+
+
+    var payments;
+
+    try {
+       payments = await Payment.find({ firstName: req.user.firstName, lastName: req.user.lastName });
+      // console.log(`the payments is ${payments}`);
+    } catch (err) {
+      payments = null;
+      console.error(err);
+    }
+
+    req.user.paymentArr = payments;
+    next();
+  
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+};
+
+
+
 // const  makePayment = async (req, res, next) => {
 //   const { firstName, lastName, role } = req.body;
 //   console.log(req.body);
@@ -188,4 +219,4 @@ const makePayment = async (req, res, next) => {
 
 
 
-module.exports = { register, login,makePayment};
+module.exports = { register, login,makePayment, getUserInfo};

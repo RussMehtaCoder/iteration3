@@ -20,6 +20,24 @@ router.post('/makepayment', backendFunc.makePayment, (req, res) => {
 });
 
 
+router.get('/getuserinfo', backendFunc.getUserInfo, (req, res) => {
+  // console.log(req.user);
+  // console.log(req.user.paymentArr);
+  // Constructing the response object
+  const response = {
+    user: req.user,
+    payments: req.user.paymentArr
+  };
+
+  // Sending the response as JSON
+  res.json(response);
+
+  // res.json(req.user)
+  // res.json({ message: `${req.payment.firstName} ${req.payment.lastName} paid for ${req.payment.paymentTitle}` });
+});
+
+
+
 
 // router.post('/makePayment', authenticate, (req, res) => {
 //   // res.json({ message: `Welcome ${req.user.username}` });

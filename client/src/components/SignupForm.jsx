@@ -82,7 +82,7 @@ const SignUpForm = ({ switchToLogin }) => {
         </div>
         <button
           type="submit"
-          className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          className="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600"
         >
           Sign Up
         </button>
@@ -90,7 +90,7 @@ const SignUpForm = ({ switchToLogin }) => {
       <div className="flex justify-between mt-4 gap-9">
         <button
           onClick={switchToLogin}
-          className="text-green-500 hover:underline"
+          className="text-gray-500 hover:underline"
         >
           Already have an account? Log In
         </button>

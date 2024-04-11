@@ -12,8 +12,8 @@ import AuthPage from "./views/AuthPage";
 export const UserDocContext = createContext();
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [userDoc, setUserDoc] = useState(null);
+  const [user, setUser] = useState(true); //   !!!useState(null)
+  const [userDoc, setUserDoc] = useState(true); //   !!!useState(null)
 
   useEffect(() => {
     //fetch the user doc
@@ -22,7 +22,7 @@ function App() {
       if (user) {
         try {
           const response = await userService.getUserFirebaseUID();
-          setUserDoc(response.data);
+          setUserDoc(true); //  !!!setUserDoc(response.data)
         } catch (error) {
           console.log(error);
         }
@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      setUser(true); //  !!!setUser(currentUser)
     });
     // Cleanup subscription on unmount
     return () => unsubscribe();

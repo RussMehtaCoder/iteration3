@@ -7,10 +7,10 @@ const paymentRoutes = require('./routes/payments');
 const messageRoutes = require('./routes/messages');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Connect to MongoDB
-connectDB();
+// connectDB();
 
 // Parse JSON request body
 app.use(express.json());

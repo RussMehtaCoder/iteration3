@@ -42,7 +42,7 @@ const paymentSchema = new mongoose.Schema(
 
     amount: {
       type: Number,
-      required: true,
+      default: 10,
     },
 
     status: {

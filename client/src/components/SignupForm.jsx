@@ -8,11 +8,12 @@ const SignUpForm = ({ switchToLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [userRole, setUserRole] = useState("member");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const body = { username, password, email };
+      const body = { username, password, email, userRole };
       await userService.create(body);
       await signInWithEmailAndPassword(auth, email, password);
 
@@ -67,6 +68,18 @@ const SignUpForm = ({ switchToLogin }) => {
           placeholder="Password"
           minLength="6"
         />
+        <div className="flex items-center mb-4">
+          <input
+            type="checkbox"
+            id="isCoach"
+            checked={userRole === "coach"}
+            onChange={(e) => setUserRole(e.target.checked ? "coach" : "member")}
+            className="mr-2"
+          />
+          <label htmlFor="isCoach" className="text-gray-700">
+            Sign up as a coach
+          </label>
+        </div>
         <button
           type="submit"
           className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600"

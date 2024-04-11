@@ -39,7 +39,7 @@ function Fees() {
           fees.map((fee, index) => {
             return (
               <li key={index} className="flex justify-center">
-                <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white-100">
+                <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
                   <div>{fee.amount}</div>
                   <div>{fee.paysFor}</div>
                   <button

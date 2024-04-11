@@ -31,7 +31,10 @@ function Inbox() {
         {messages &&
           messages.map((message, index) => {
             return (
-              <li key={index} className="p-3 border-b border-gray-200">
+              <li
+                key={index}
+                className="p-3 border-b border-gray-200 bg-white bg-opacity-50"
+              >
                 <div>{message}</div>
               </li>
             );

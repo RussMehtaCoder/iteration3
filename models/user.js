@@ -5,31 +5,47 @@ const userSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      unique: true
     },
+
     lastName: {
       type: String,
-      required: true,
-      unique: true
     },
+
     email: {
       type: String,
       required: true,
       unique: true
     },
+
     password: {
       type: String,
       required: true
     },
+
     role: {
       type: String,
       enum: ['member', 'coach', 'treasurer'],
-      default: 'member'
+      default: 'member',
     },
-    messages: {
-      type: [String],
-      required: false
-    }
+
+    lateStatus: {
+      type: Boolean,
+      default: false,
+    },
+
+    classesPaidFor: {
+      type: Number,
+      default: 0,
+    },
+
+    classesAttended: {
+      type: Number,
+      default: 0,
+    },
+
+    address: String,
+    phoneNumber: String,
+    
   },
   { timestamps: true }
 );
@@ -49,12 +65,11 @@ const userSchema = new mongoose.Schema(
 // });
 
 // Compare the given password with the hashed password in the database
-userSchema.methods.comparePassword = async function (password) {
-  return password == this.password;
-  // return bcrypt.compare(password, this.password);
-};
+// userSchema.methods.comparePassword = async function (password) {
+//   return password == this.password;
+//   // return bcrypt.compare(password, this.password);
+// };
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
-exports = User;

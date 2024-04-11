@@ -1,0 +1,17 @@
+import { initializeApp } from "firebase/app";
+import { getAuth} from "firebase/auth";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDSbGInrtFvELpsMNXt7Mpb4o3Lhwzc4IE",
+    authDomain: "iteration3-e8be7.firebaseapp.com",
+    projectId: "iteration3-e8be7",
+    storageBucket: "iteration3-e8be7.appspot.com",
+    messagingSenderId: "358434522672",
+    appId: "1:358434522672:web:4f2d63f837268125f58ff5",
+    measurementId: "G-RQQ2527M25"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export default app;

@@ -49,8 +49,12 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       enum: ['paid', 'unpaid'],
       default: 'unpaid',
-    }
+    },
 
+    date: {
+      type: Date,
+      default: Date.now,
+    },
 
   },
   { timestamps: true }

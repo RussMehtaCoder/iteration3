@@ -4,8 +4,8 @@ const backendFunc = require('../controllers/auth');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/Users');
-const Payment = require('../models/Payments');
+const User = require('../models/user');
+const Payment = require('../models/payment');
 
 const router = express.Router();
 

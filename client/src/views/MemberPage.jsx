@@ -9,11 +9,13 @@ function MemberPage() {
     <div>
       <Router>
         <Navbar />
-        <Routes>
-          <Route path="/sessions" element={<Sessions />} />
-          <Route path="/fees" element={<Fees />} />
-          <Route path="/inbox" element={<Inbox />} />
-        </Routes>
+        <div className="mt-28">
+          <Routes>
+            <Route path="/sessions" element={<Sessions />} />
+            <Route path="/fees" element={<Fees />} />
+            <Route path="/inbox" element={<Inbox />} />
+          </Routes>
+        </div>
       </Router>
     </div>
   );

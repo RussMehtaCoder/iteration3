@@ -10,12 +10,14 @@ function TreasurerPage() {
     <div>
       <Router>
         <Navbar />
-        <Routes>
-          <Route path="/sessions" element={<Sessions />} />
-          <Route path="/finances" element={<Finances />} />
-          <Route path="/coaches" element={<Coaches />} />
-          <Route path="/members" element={<Members />} />
-        </Routes>
+        <div className="mt-28">
+          <Routes>
+            <Route path="/sessions" element={<Sessions />} />
+            <Route path="/finances" element={<Finances />} />
+            <Route path="/coaches" element={<Coaches />} />
+            <Route path="/members" element={<Members />} />
+          </Routes>
+        </div>
       </Router>
     </div>
   );

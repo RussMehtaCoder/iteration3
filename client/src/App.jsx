@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState, useEffect, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase-config";

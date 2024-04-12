@@ -4,7 +4,7 @@ const Message = require('../models/message');
 const Payment = require('../models/payment');
 
 module.exports.getAll = async (req, res) => {
-    const sessions = await Session.find().sort({ date: -1 });
+    const sessions = await Session.find().populate('attendees').sort({ date: -1 });
 
     res.json(sessions);
 

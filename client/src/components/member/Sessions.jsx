@@ -4,7 +4,7 @@ import { UserDocContext } from "../../App";
 import { useContext } from "react";
 
 function Sessions() {
-  /* const userDoc = useContext(UserDocContext); */
+  const userDoc = useContext(UserDocContext);
 
   /*useEffect(() => {
     const loadSessions = async () => {
@@ -17,22 +17,55 @@ function Sessions() {
     };
   }, []); */
 
-  const sessions = [
-    { date: "4/3/2024", coach: "John" },
-    { date: "4/29/2024", coach: "Markus" },
-    { date: "5/2/2024", coach: "Mya" },
-  ];
+  const [sessions, setSessions] = useState([
+    {
+      date: "4/3/2024",
+      coach: "John",
+      attendees: [],
+    },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: [],
+    },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: [],
+    },
+    { date: "5/2/2024", coach: "Mya", attendees: [] },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: [],
+    },
+  ]);
 
-  const handleSignUpClick = (e) => {
+  const handleSignUpClick = (e, session) => {
     e.target.innerText = "Signed";
     e.target.style.backgroundColor = "black";
     //service to add user to that session
+    //service to add unpaid user payment $20 for session
+    console.log(session);
+    session.attendees.push(userDoc._id);
+    setSessions([...sessions]);
   };
 
   const handleMonthSignUpClick = (e) => {
     e.target.innerText = "Signed";
     e.target.style.backgroundColor = "black";
-    //service to add user to that session
+    for (let i = 0; i < 4; i++) {
+      if (sessions.length > i && !isUserSignedUp(sessions[i])) {
+        //service to add user to that session
+        sessions[i].attendees.push(userDoc._id);
+      }
+    }
+    //service to add unpaid user payment $80 for month
+    setSessions([...sessions]);
+  };
+
+  const isUserSignedUp = (session) => {
+    return session.attendees.includes(userDoc._id);
   };
 
   return (
@@ -56,12 +89,18 @@ function Sessions() {
                 <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
                   <div>{session.date}</div>
                   <div>Sensei {session.coach}</div>
-                  <button
-                    onClick={(e) => handleSignUpClick(e)}
-                    className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
-                  >
-                    Sign Up
-                  </button>
+                  {isUserSignedUp(session) ? (
+                    <button className="bg-black hover:bg-red-900 text-white font-bold py-1 px-4 rounded">
+                      Signed
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(e) => handleSignUpClick(e, session)}
+                      className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
+                    >
+                      Sign Up
+                    </button>
+                  )}
                 </div>
               </li>
             );

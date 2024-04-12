@@ -7,6 +7,9 @@ const sessionRoutes = require("./routes/sessions");
 const paymentRoutes = require("./routes/payments");
 const messageRoutes = require("./routes/messages");
 
+const users = require("./controllers/users");
+const auth = require("./middlewares/auth");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +24,10 @@ app.use(cors());
 
 // Define authentication routes
 //app.use("/auth", authRoutes);
+
+app.post("/users", users.createUser);
+
+app.use(auth.checkFirebaseToken);
 
 // Define user routes
 app.use("/users", userRoutes);

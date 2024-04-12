@@ -8,8 +8,11 @@ const router = express.Router();
 
 /*
 TODO: 
-    GET     /?receiver=*
+    GET     /
     POST    /
 */
+
+router.get('/', catchAsync(messages.getMessages));
+router.post('/', catchAsync(messages.createMessage));
 
 module.exports = router;

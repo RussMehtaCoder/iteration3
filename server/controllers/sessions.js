@@ -51,26 +51,31 @@ module.exports.updateSessionCoach = async (req, res) => {
 
 //edit attendees list
 
-//need id of member
+//need an id of member to be added to be sent in req.body (called from coach)
 module.exports.addSessionAttendee = async (req, res) => {
     const { id } = req.params;
     const { attendeeId } = req.body;
     const session = await Session.findByIdAndUpdate(id, { $push: { attendees: attendeeId } }, { new: true });
+    
+    const message = new Message({text: "You were added to a session", receiver: attendeeId });
+    await message.save();
+    
     res.json(session);
-    //TODO: send message
 }
 
-//need id of member
+//need an id of member to be added to be sent in req.body
 module.exports.removeSessionAttendee = async (req, res) => {
     const { id } = req.params;
     const { attendeeId } = req.body;
     const session = await Session.findByIdAndUpdate(id, { $pull: { attendees: attendeeId } }, { new: true });
+    
+    const message = new Message({text: "You were removed from a session", receiver: attendeeId });
+    await message.save();
+    
     res.json(session);
-    //TODO: send message
 }
 
-//member session signup
-//not working yet
+//signup member for a session (called by member)
 module.exports.memberSignup = async (req, res) => {
     const { id } = req.params;
     const session = await Session.findByIdAndUpdate(id, { $push: { attendees: req.user._id } }, { new: true });

@@ -44,17 +44,28 @@ module.exports.getTreasurerIncome = async (req, res) => {
 }
 
 //need user id to fetch those unpaid that belong to this user
-module.exports.getMemberPayments = async (req, res) => {}
+module.exports.getMemberPayments = async (req, res) => {
+    const payments = await Payment.find({payer: req.user._id, status: "unpaid"});
 
+    res.json(payments);
 
-//need to add functionality. not always create payment but also need to update existing
+}
+
 module.exports.createPayment = async (req, res) => {
 
     const payment = new Payment(req.body);
 
     await payment.save();
 
-    res.status(201).send('Payment accepted');
+    res.json(payment);
 }
 
-// create /pay route and route handler to set the status of payment from paid to unpaid
+// to set the status of payment from paid to unpaid
+module.exports.pay = async (req, res) => {
+    const { id } = req.params;
+
+    const payment = await Payment.findByIdAndUpdate(id, { status: "paid" }, { new: true });
+
+    res.json(payment);
+
+}

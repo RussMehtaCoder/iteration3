@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const paymentSchema = new mongoose.Schema(
   {
@@ -30,14 +30,14 @@ const paymentSchema = new mongoose.Schema(
 
     payer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
 
     paysFor: {
       type: String,
-      enum: ['session', 'coach', 'hall', 'lateFee'],
-      required: true
+      enum: ["session", "month", "coach", "hall", "lateFee"],
+      required: true,
     },
 
     amount: {
@@ -47,15 +47,14 @@ const paymentSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['paid', 'unpaid'],
-      default: 'unpaid',
+      enum: ["paid", "unpaid"],
+      default: "unpaid",
     },
 
     date: {
       type: Date,
       default: Date.now,
     },
-
   },
   { timestamps: true }
 );
@@ -74,6 +73,6 @@ const paymentSchema = new mongoose.Schema(
 //   }
 // });
 
-const Payment = mongoose.model('Payment', paymentSchema);
+const Payment = mongoose.model("Payment", paymentSchema);
 
 module.exports = Payment;

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import CoachSelectPopUp from "./CoachSelectPopUp";
+import Attendees from "./Attendees";
 
 function Sessions() {
   /*useEffect(() => {
@@ -15,12 +16,31 @@ function Sessions() {
   }, []); */
   const [coachSelect, setCoachSelect] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
-
-  const sessions = [
-    { date: "4/3/2024", coach: "John" },
-    { date: "4/29/2024", coach: "Markus" },
-    { date: "5/2/2024", coach: "Mya" },
-  ];
+  const [viewAttendees, setViewAttendees] = useState(false);
+  //need to populate attendees w/ docs (to use names) before getting them here
+  const [sessions, setSessions] = useState([
+    {
+      date: "4/3/2024",
+      coach: "John",
+      attendees: [],
+    },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: ["6618d47ddd5e7e25893081df"],
+    },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: ["6618d47ddd5e7e25893081df"],
+    },
+    { date: "5/2/2024", coach: "Mya", attendees: [] },
+    {
+      date: "4/29/2024",
+      coach: "Markus",
+      attendees: [],
+    },
+  ]);
 
   const changeCoach = (session) => {
     //service to update session
@@ -28,7 +48,11 @@ function Sessions() {
     setCoachSelect(!coachSelect);
   };
 
-  const viewMembers = (session) => {};
+  const viewMembers = (session) => {
+    //service to get all attendees of session
+    setSelectedSession(session);
+    setViewAttendees(!viewAttendees);
+  };
 
   return (
     <div className>
@@ -51,7 +75,7 @@ function Sessions() {
                       onClick={() => viewMembers(session)}
                       className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
                     >
-                      view members
+                      view attendees
                     </button>
                   </div>
                 </div>
@@ -64,6 +88,16 @@ function Sessions() {
           <div className="bg-white p-6 rounded shadow-lg">
             <CoachSelectPopUp
               setCoachSelect={setCoachSelect}
+              selectedSession={selectedSession}
+            />
+          </div>
+        </div>
+      )}
+      {viewAttendees && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg">
+            <Attendees
+              setViewAttendees={setViewAttendees}
               selectedSession={selectedSession}
             />
           </div>

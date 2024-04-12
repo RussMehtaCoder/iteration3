@@ -4,6 +4,7 @@ const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
 
   const setCoach = (coach) => {
     //make coach the new coach of selectedSession
+    selectedSession.coach = coach.name;
     setCoachSelect(false);
   };
 

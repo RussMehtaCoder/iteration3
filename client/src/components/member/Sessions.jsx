@@ -26,12 +26,12 @@ function Sessions() {
     {
       date: "4/29/2024",
       coach: "Markus",
-      attendees: ["6618d47ddd5e7e25893081df"],
+      attendees: [],
     },
     {
       date: "4/29/2024",
       coach: "Markus",
-      attendees: ["6618d47ddd5e7e25893081df"],
+      attendees: [],
     },
     { date: "5/2/2024", coach: "Mya", attendees: [] },
     {

@@ -1,4 +1,5 @@
 const Payment = require('../models/payment');
+const User = require('../models/user');
 
 module.exports.getTreasurerPayments = async (req, res) => {
     //get treasurer payments based on paid/unpaid status to be sent in the req query string
@@ -43,11 +44,28 @@ module.exports.getTreasurerIncome = async (req, res) => {
     res.json(incomeList);
 }
 
-//need user id to fetch those unpaid that belong to this user
+//need user id to fetch unpaid that belong to this user
 module.exports.getMemberPayments = async (req, res) => {
     const payments = await Payment.find({payer: req.user._id, status: "unpaid"});
 
     res.json(payments);
+
+}
+
+// to set the status of payment from paid to unpaid
+module.exports.pay = async (req, res) => {
+    const { id } = req.params;
+
+    const payment = await Payment.findByIdAndUpdate(id, { status: "paid" }, { new: true });
+
+    //increment timespaid if member
+    const userToUpdate = await User.findById(req.user._id);
+    if (userToUpdate.role === "member") {
+        userToUpdate.classesPaidFor = userToUpdate.classesPaidFor + 1;
+        await userToUpdate.save();
+    }
+
+    res.json(payment);
 
 }
 
@@ -58,14 +76,4 @@ module.exports.createPayment = async (req, res) => {
     await payment.save();
 
     res.json(payment);
-}
-
-// to set the status of payment from paid to unpaid
-module.exports.pay = async (req, res) => {
-    const { id } = req.params;
-
-    const payment = await Payment.findByIdAndUpdate(id, { status: "paid" }, { new: true });
-
-    res.json(payment);
-
 }

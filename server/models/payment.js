@@ -43,17 +43,20 @@ const paymentSchema = new mongoose.Schema(
     amount: {
       type: Number,
       default: 10,
+      required: true
     },
 
     status: {
       type: String,
       enum: ['paid', 'unpaid'],
       default: 'unpaid',
+      required: true
     },
 
     date: {
       type: Date,
       default: Date.now,
+      required: true,
     },
 
   },

@@ -1,6 +1,7 @@
 const Session = require('../models/session');
 const User = require('../models/user');
 const Message = require('../models/message');
+const Payment = require('../models/payment');
 
 module.exports.getAll = async (req, res) => {
     const sessions = await Session.find().sort({ date: -1 });
@@ -34,18 +35,25 @@ module.exports.createSession = async (req, res) => {
 
 //same here
 module.exports.updateSessionCoach = async (req, res) => {
-    const { coachName } = req.body;
-    const foundCoach = await User.findOne({ firstName: new RegExp(`^${coachName}$`, 'i'), role: "coach" });
+    // const { coachName } = req.body;
+    // const foundCoach = await User.findOne({ firstName: new RegExp(`^${coachName}$`, 'i'), role: "coach" });
 
-    if (foundCoach) {
-        const { id } = req.params;
+    // if (foundCoach) {
+    //     const { id } = req.params;
 
-        const session = await Session.findByIdAndUpdate(id, { coach: foundCoach._id }, { new: true });
+    //     const session = await Session.findByIdAndUpdate(id, { coach: foundCoach._id }, { new: true });
 
-        res.json(session);
-    } else {
-        res.status(400).send("Coach not found");
-    }
+    //     res.json(session);
+    // } else {
+    //     res.status(400).send("Coach not found");
+    // }
+
+    const { id } = req.params;
+    const { coachId } = req.body;
+
+    const session = await Session.findByIdAndUpdate(id, { coach: coachId }, { new: true });
+
+    res.json(session);
 
 }
 
@@ -59,6 +67,15 @@ module.exports.addSessionAttendee = async (req, res) => {
     
     const message = new Message({text: "You were added to a session", receiver: attendeeId });
     await message.save();
+
+    //post payment
+    const payment = new Payment({
+        payer: attendeeId,
+        paysFor: 'session',
+        amount: 10,
+        status: 'unpaid',
+    })
+    await payment.save();
     
     res.json(session);
 }
@@ -71,13 +88,35 @@ module.exports.removeSessionAttendee = async (req, res) => {
     
     const message = new Message({text: "You were removed from a session", receiver: attendeeId });
     await message.save();
+
+    /* 
+    should remove payment for the session but payments not linked directly to sessions 
+    const payment = await Payment.findOneAndDelete({})
+    */
     
     res.json(session);
 }
 
 //signup member for a session (called by member)
 module.exports.memberSignup = async (req, res) => {
+    //put to sessions' attendee list
     const { id } = req.params;
     const session = await Session.findByIdAndUpdate(id, { $push: { attendees: req.user._id } }, { new: true });
+
+    //sent notification
+    const date = new Date(session.date);
+    const readableDate = date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    const message = new Message({text: `You signed up for a session on ${readableDate}`, receiver: req.user._id });
+    await message.save();
+
+    //post payment
+    const payment = new Payment({
+        payer: req.user._id,
+        paysFor: 'session',
+        amount: 10,
+        status: 'unpaid',
+    })
+    await payment.save();
+
     res.json(session);
 }

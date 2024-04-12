@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import Attendees from "./Attendees";
+import sessionService from "../../services/sessionService";
 
 function Sessions() {
-  //get userDoc from context and use this to filter only sessions of the current sensei
-  //or maybe Raj made endpoint for this
-
-  /*useEffect(() => {
+  useEffect(() => {
     const loadSessions = async () => {
-      const { data } = await sessionService.getAll(userDoc.id); //or .name or .uid
+      const { data } = await sessionService.getAllForCoach(); //or .name or .uid
       setSessions(data);
     };
-    loadSession();
-    return () => {  //cleanup so rendered fees removed right away
-      setSession([refresh]);
+    loadSessions();
+    return () => {
+      //cleanup so rendered fees removed right away
+      setSessions([]);
     };
-  }, []); */
+  }, []);
   const [selectedSession, setSelectedSession] = useState(null);
   const [viewAttendees, setViewAttendees] = useState(false);
-  //need to populate attendees w/ docs (to use names) before getting them here
   const [sessions, setSessions] = useState([
     {
       date: "4/3/2024",

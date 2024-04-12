@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import userService from "../../services/userService";
 
 const Members = () => {
-  /*useEffect(() => {
+  useEffect(() => {
     const loadMembers = async () => {
-      const { data } = await memberService.getAll(userDoc.id); //or .name or .uid
-      setMember(data);
+      const { data } = await userService.getMembers(); //or .name or .uid
+      setMembers(data);
     };
     loadMembers();
-    return () => {  //cleanup so rendered removed right away
+    return () => {
+      //cleanup so rendered removed right away
       setMembers([]);
     };
-  }, []); */
+  }, []);
+
   const [members, setMembers] = useState([
     {
       name: "John Smith",

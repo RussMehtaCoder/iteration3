@@ -1,18 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import MessagePopUp from "../MessagePopUp";
+import userService from "../../services/userService";
 
 const Members = () => {
-  /*useEffect(() => {
-    const loadMembers = async () => {
-      const { data } = await memberService.getAll(userDoc.id); //or .name or .uid
-      setMember(data);
-    };
-    loadMembers();
-    return () => {  //cleanup so rendered removed right away
-      setMembers([]);
-    };
-  }, []); */
   const [members, setMembers] = useState([
     {
       name: "John Smith",
@@ -60,6 +51,18 @@ const Members = () => {
 
   const [showDraft, setShowDraft] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
+
+  useEffect(() => {
+    const loadMembers = async () => {
+      const { data } = await userService.getMembers(); //or .name or .uid
+      setMembers(data);
+    };
+    loadMembers();
+    return () => {
+      //cleanup so rendered removed right away
+      setMembers([]);
+    };
+  }, []);
 
   const sortByNotPaid = () => {
     setMembers(

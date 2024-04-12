@@ -30,9 +30,27 @@ const update = async (id, newObject) => {
   });
 };
 
+const getMembers = async () => {
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/members`;
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const getCoaches = async () => {
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/coaches`;
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export default {
   getUser,
   getUserFirebaseUID,
   create,
   update,
+  getMembers,
+  getCoaches,
 };

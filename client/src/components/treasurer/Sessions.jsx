@@ -2,22 +2,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import CoachSelectPopUp from "./CoachSelectPopUp";
 import Attendees from "./Attendees";
+import sessionService from "../../services/sessionService";
 
 function Sessions() {
-  /*useEffect(() => {
-    const loadSessions = async () => {
-      const { data } = await sessionService.getAll(userDoc.id); //or .name or .uid
-      setSessions(data);
-    };
-    loadSession();
-    return () => {  //cleanup so rendered fees removed right away
-      setSession([refresh]);
-    };
-  }, []); */
   const [coachSelect, setCoachSelect] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
   const [viewAttendees, setViewAttendees] = useState(false);
-  //need to populate attendees w/ docs (to use names) before getting them here
   const [sessions, setSessions] = useState([
     {
       date: "4/3/2024",
@@ -41,6 +31,18 @@ function Sessions() {
       attendees: [],
     },
   ]);
+
+  useEffect(() => {
+    const loadSessions = async () => {
+      const { data } = await sessionService.getAll();
+      setSessions(data);
+    };
+    loadSessions();
+    return () => {
+      //cleanup so rendered fees removed right away
+      setSessions([]);
+    };
+  }, []);
 
   const changeCoach = (session) => {
     //service to update session

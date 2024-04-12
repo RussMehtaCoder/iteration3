@@ -3,26 +3,27 @@ import { useState } from "react";
 import { UserDocContext } from "../../App";
 import { useContext } from "react";
 import PaymentForm from "../PaymentForm";
-//import paymentService from "../../services/paymentService";
+import paymentService from "../../services/paymentService";
 
 function Fees() {
-  /* const userDoc = useContext(UserDocContext); */
+  const userDoc = useContext(UserDocContext);
   const [fees, setFees] = useState([
     { id: "2", paysFor: "session", amount: "$20" },
     { id: "2", paysFor: "lateFee", amount: "$30" },
     { id: "2", paysFor: "session", amount: "$20" },
   ]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const loadFees = async () => {
-      const { data } = await feeService.getAll(userDoc.id); //or .name or .uid
-      setfees(data);
+      const { data } = await paymentService.getFees(userDoc.id);
+      setFees(data);
     };
     loadFees();
-    return () => {  //cleanup so rendered fees removed right away
-      setfees([]);
+    return () => {
+      //cleanup so rendered fees removed right away
+      setFees([]);
     };
-  }, []); */
+  }, []);
 
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);

@@ -2,21 +2,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { UserDocContext } from "../../App";
 import { useContext } from "react";
+import sessionService from "../../services/sessionService";
 
 function Sessions() {
   const userDoc = useContext(UserDocContext);
-
-  /*useEffect(() => {
-    const loadSessions = async () => {
-      const { data } = await sessionService.getAll(userDoc.id); //or .name or .uid
-      setSessions(data);
-    };
-    loadSession();
-    return () => {  //cleanup so rendered fees removed right away
-      setSession([]);
-    };
-  }, []); */
-
   const [sessions, setSessions] = useState([
     {
       date: "4/3/2024",
@@ -40,6 +29,17 @@ function Sessions() {
       attendees: [],
     },
   ]);
+
+  useEffect(() => {
+    const loadSessions = async () => {
+      const { data } = await sessionService.getAll();
+      setSessions(data);
+    };
+    loadSessions();
+    return () => {  //cleanup so rendered fees removed right away
+      setSessions([]);
+    };
+  }, []);
 
   const handleSignUpClick = (e, session) => {
     e.target.innerText = "Signed";

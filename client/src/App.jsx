@@ -12,8 +12,6 @@ function App() {
   const [userDoc, setUserDoc] = useState(null);
 
   useEffect(() => {
-    //fetch the user doc
-    //set context api so that each document has access to this user doc
     const getUserDoc = async () => {
       if (user) {
         try {

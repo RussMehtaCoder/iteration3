@@ -1,6 +1,20 @@
+import { useState, useEffect } from "react";
+import userService from "../../services/userService";
+
 const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
-  //we need access to all the coaches here to select from
-  const coaches = [{ name: "John Wok" }, { name: "Kathy Grib" }];
+  const [coaches, setCoaches] = useState([]);
+
+  useEffect(() => {
+    const loadCoaches = async () => {
+      const { data } = await userService.getCoaches();
+      setCoaches(data);
+    };
+    loadCoaches();
+    return () => {
+      //cleanup so rendered removed right away
+      setCoaches([]);
+    };
+  }, []);
 
   const setCoach = (coach) => {
     //make coach the new coach of selectedSession

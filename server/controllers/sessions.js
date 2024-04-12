@@ -4,7 +4,13 @@ const Message = require('../models/message');
 const Payment = require('../models/payment');
 
 module.exports.getAll = async (req, res) => {
-    const sessions = await Session.find().populate('attendees').sort({ date: -1 });
+    let sessions = await Session.find().populate('attendees').sort({ date: -1 });
+
+    const role = req.query.role;
+
+    if (role) {
+        sessions = sessions.filter(session => session.coach.toString() === req.user._id.toString());
+    }
 
     res.json(sessions);
 

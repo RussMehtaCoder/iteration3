@@ -5,12 +5,12 @@ import CoachPage from "./CoachPage";
 import TreasurerPage from "./TreasurerPage";
 
 const MainPage = () => {
-  const userDoc = { role: "treasurer" }; //  !!!useContext(UserDocContext)
+  const userDoc = useContext(UserDocContext);
   if (userDoc.role == "member") {
     return <MemberPage />;
   } else if (userDoc.role == "coach") {
     return <CoachPage />;
-  } else {
+  } else if (userDoc.role == "treasurer") {
     return <TreasurerPage />;
   }
 };

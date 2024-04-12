@@ -5,19 +5,20 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import logo from "../assets/karatelogo.jpg";
 
 const SignUpForm = ({ switchToLogin }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [userRole, setUserRole] = useState("member");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("member");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const body = { username, password, email, userRole };
+      const body = { firstName, lastName, password, email, role };
       await userService.create(body);
       await signInWithEmailAndPassword(auth, email, password);
-
-      setUsername("");
+      setFirstName("");
+      setLastName("");
       setPassword("");
       setEmail("");
     } catch (err) {
@@ -41,6 +42,24 @@ const SignUpForm = ({ switchToLogin }) => {
           Create Account
         </h2>
         <input
+          type="text"
+          id="firstname"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          id="lastname"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          placeholder="Last Name"
+        />
+        <input
           type="email"
           id="email"
           value={email}
@@ -48,15 +67,6 @@ const SignUpForm = ({ switchToLogin }) => {
           required
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           placeholder="Email"
-        />
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder="Username"
         />
         <input
           type="password"
@@ -72,8 +82,8 @@ const SignUpForm = ({ switchToLogin }) => {
           <input
             type="checkbox"
             id="isCoach"
-            checked={userRole === "coach"}
-            onChange={(e) => setUserRole(e.target.checked ? "coach" : "member")}
+            checked={role === "coach"}
+            onChange={(e) => setRole(e.target.checked ? "coach" : "member")}
             className="mr-2"
           />
           <label htmlFor="isCoach" className="text-gray-700">

@@ -5,14 +5,11 @@ import userService from "./services/userService";
 import MainPage from "./views/MainPage";
 import AuthPage from "./views/AuthPage";
 
-//user logs in with firebase
-//user.type is then used to conditionally render the relevant page
-
 export const UserDocContext = createContext();
 
 function App() {
-  const [user, setUser] = useState(true); //   !!!useState(null)
-  const [userDoc, setUserDoc] = useState(true); //   !!!useState(null)
+  const [user, setUser] = useState(null);
+  const [userDoc, setUserDoc] = useState(null);
 
   useEffect(() => {
     //fetch the user doc
@@ -21,7 +18,7 @@ function App() {
       if (user) {
         try {
           const response = await userService.getUserFirebaseUID();
-          setUserDoc(true); //  !!!setUserDoc(response.data)
+          setUserDoc(response.data);
         } catch (error) {
           console.log(error);
         }
@@ -33,7 +30,7 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(true); //  !!!setUser(currentUser)
+      setUser(currentUser);
     });
     // Cleanup subscription on unmount
     return () => unsubscribe();

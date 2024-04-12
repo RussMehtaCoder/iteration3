@@ -13,9 +13,6 @@ const Navbar = () => {
           <Link to="/sessions">Sessions</Link>
         </li>
         <li className="flex justify-center items-center text-xl">
-          <Link to="/coaches">Coaches</Link>
-        </li>
-        <li className="flex justify-center items-center text-xl">
           <Link to="/members">Members</Link>
         </li>
       </ul>

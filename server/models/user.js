@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
@@ -11,21 +11,18 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
 
+    fireBaseId: { type: String, required: true },
+
     email: {
       type: String,
       required: true,
-      unique: true
-    },
-
-    password: {
-      type: String,
-      required: true
+      unique: true,
     },
 
     role: {
       type: String,
-      enum: ['member', 'coach', 'treasurer'],
-      default: 'member',
+      enum: ["member", "coach", "treasurer"],
+      default: "member",
     },
 
     lateStatus: {
@@ -45,7 +42,6 @@ const userSchema = new mongoose.Schema(
 
     address: String,
     phoneNumber: String,
-    
   },
   { timestamps: true }
 );
@@ -70,6 +66,6 @@ const userSchema = new mongoose.Schema(
 //   // return bcrypt.compare(password, this.password);
 // };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

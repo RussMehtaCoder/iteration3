@@ -32,9 +32,6 @@ const Coaches = () => {
                   <div>{coach.name}</div>
                   <div>{coach.email}</div>
                   <div>{coach.phone}</div>
-                  <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded">
-                    message
-                  </button>
                 </div>
               </li>
             );

@@ -10,10 +10,11 @@ function Sessions() {
     };
     loadSession();
     return () => {  //cleanup so rendered fees removed right away
-      setSession([]);
+      setSession([refresh]);
     };
   }, []); */
   const [coachSelect, setCoachSelect] = useState(false);
+  const [selectedSession, setSelectedSession] = useState(null);
 
   const sessions = [
     { date: "4/3/2024", coach: "John" },
@@ -23,7 +24,11 @@ function Sessions() {
 
   const changeCoach = (session) => {
     //service to update session
+    setSelectedSession(session);
+    setCoachSelect(!coachSelect);
   };
+
+  const viewMembers = (session) => {};
 
   return (
     <div className>
@@ -35,18 +40,35 @@ function Sessions() {
                 <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
                   <div>{session.date}</div>
                   <div>Sensei {session.coach}</div>
-                  <button
-                    onClick={() => changeCoach(session)}
-                    className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
-                  >
-                    change coach
-                  </button>
+                  <div className="flex gap-5">
+                    <button
+                      onClick={() => changeCoach(session)}
+                      className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
+                    >
+                      change coach
+                    </button>
+                    <button
+                      onClick={() => viewMembers(session)}
+                      className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded"
+                    >
+                      view members
+                    </button>
+                  </div>
                 </div>
               </li>
             );
           })}
       </ul>
-      {coachSelect && <CoachSelectPopUp setCoachSelect={setCoachSelect} />}
+      {coachSelect && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg">
+            <CoachSelectPopUp
+              setCoachSelect={setCoachSelect}
+              selectedSession={selectedSession}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

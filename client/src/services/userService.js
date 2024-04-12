@@ -1,5 +1,5 @@
 import axios from "axios";
-//const baseUrl = `${import.meta.env.VITE_BASEURL}/api/users`;   !!!!just hardode the URL to get the user
+const baseUrl = `${import.meta.env.VITE_BASEURL}/users`; //fix endpoint route
 import { auth } from "../config/firebase-config";
 
 const create = (newObject) => {

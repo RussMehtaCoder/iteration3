@@ -80,6 +80,15 @@ const Members = () => {
     );
   };
 
+  const alertMember = (name, e) => {
+    name;
+    //create an alert message about late payments
+    //messageService to create this POST request
+    e.target.innerText = "Alerted";
+    e.target.style.backgroundColor = "black";
+    e.target.disabled = true;
+  };
+
   return (
     <div>
       <ul className="px-40">
@@ -115,9 +124,14 @@ const Members = () => {
                       ? 0
                       : member.classesAttended - member.classesPaidFor}
                   </div>
-                  <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded">
-                    message
-                  </button>
+                  {member.classesAttended - member.classesPaidFor > 0 ? (
+                    <button
+                      onClick={(e) => alertMember(member.name, e)}
+                      className=" w-20 bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded flex justify-center"
+                    >
+                      Alert
+                    </button>
+                  ) : null}
                 </div>
               </li>
             );

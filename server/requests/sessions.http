@@ -21,3 +21,28 @@ content-type: application/json
 }
 
 ###
+
+PUT http://localhost:3000/sessions/661877f0ad10b859afa4d521/coach
+content-type: application/json
+
+{
+    "coachName": "vlad"
+}
+
+###
+
+PUT http://localhost:3000/sessions/661877f0ad10b859afa4d521/attendees/add
+content-type: application/json
+
+{
+    "attendeeId": "6618338d4bcc6d0941c4b8d4"
+}
+
+###
+
+PUT http://localhost:3000/sessions/661877f0ad10b859afa4d521/attendees/remove
+content-type: application/json
+
+{
+    "attendeeId": "6618338d4bcc6d0941c4b8d4"
+}

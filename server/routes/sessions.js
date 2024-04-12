@@ -17,6 +17,10 @@ router.get('/', catchAsync(sessions.getAll));
 
 router.post('/', catchAsync(sessions.createSession));
 
-router.put('/:id', catchAsync(sessions.updateSession));
+router.put('/:id/coach', catchAsync(sessions.updateSessionCoach));
+
+router.put('/:id/attendees/add', catchAsync(sessions.addSessionAttendee));
+
+router.put('/:id/attendees/remove', catchAsync(sessions.removeSessionAttendee));
 
 module.exports = router;

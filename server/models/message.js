@@ -10,3 +10,6 @@ const messageSchema = new mongoose.Schema({
         ref: 'User',
     },
 })
+
+const Message = mongoose.model('Message', messageSchema);
+module.exports = Message;

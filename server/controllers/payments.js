@@ -56,3 +56,5 @@ module.exports.createPayment = async (req, res) => {
 
     res.status(201).send('Payment accepted');
 }
+
+// create /pay route and route handler to set the status of payment from paid to unpaid

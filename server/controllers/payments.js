@@ -4,25 +4,20 @@ const User = require('../models/user');
 module.exports.getTreasurerPayments = async (req, res) => {
     //get treasurer payments based on paid/unpaid status to be sent in the req query string
     //e.g. GET request to /payments?status=unpaid
-    const { status } = req.query;
-    let config;
-    if (status) config = { status: status };
+    const { status, paysFor } = req.query;
+
+    const config = { status, paysFor }; //ideally should validate
 
     const payments = await Payment.find(config).populate('payer').sort({ date: -1 });
-    
+
     const treasurerPayments = payments.filter(payment => payment.payer.role === 'treasurer');
 
-    const hallPayments = treasurerPayments.filter(payment => payment.paysFor === 'hall').map(payment => {
-        const { payer, ...paymentObject } = payment.toObject();
-        return paymentObject;
-    });
+    // const coachPayments = treasurerPayments.filter(payment => payment.paysFor === 'coach').map(payment => {
+    //     const { payer, ...paymentObject } = payment.toObject();
+    //     return paymentObject;
+    // });
 
-    const coachPayments = treasurerPayments.filter(payment => payment.paysFor === 'coach').map(payment => {
-        const { payer, ...paymentObject } = payment.toObject();
-        return paymentObject;
-    });
-
-    res.json([hallPayments, coachPayments]);
+    res.json(treasurerPayments);
 
 }
 

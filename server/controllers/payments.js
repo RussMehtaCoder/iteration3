@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 module.exports.getTreasurerPayments = async (req, res) => {
     //get treasurer payments based on paid/unpaid status to be sent in the req query string
-    //e.g. GET request to /payments?status=unpaid
+    //e.g. GET request to /payments/treasurer?status=unpaid
     const { status, paysFor } = req.query;
 
     const config = { status, paysFor }; //ideally should validate

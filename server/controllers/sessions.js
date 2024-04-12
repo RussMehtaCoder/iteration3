@@ -7,7 +7,7 @@ module.exports.getAll = async (req, res) => {
     let sessions = await Session.find().populate('attendees').sort({ date: -1 });
 
     const role = req.query.role;
-
+    //if provided role=coach that indicates that need sessions for this coach
     if (role) {
         sessions = sessions.filter(session => session.coach.toString() === req.user._id.toString());
     }

@@ -1,25 +1,25 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import userService from "../../services/userService";
 
 const Coaches = () => {
-  //const [coaches, setCoaches] = useState();
+  const [coaches, setCoaches] = useState([
+    { name: "John Smith", email: "my email", phone: "235252355" },
+    { name: "John Smith", email: "my email", phone: "235252355" },
+    { name: "John Smith", email: "my email", phone: "235252355" },
+  ]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const loadCoaches = async () => {
-      const { data } = await coachService.getAll(userDoc.id); //or .name or .uid
+      const { data } = await userService.getCoaches();
       setCoaches(data);
     };
     loadCoaches();
-    return () => {  //cleanup so rendered removed right away
+    return () => {
+      //cleanup so rendered removed right away
       setCoaches([]);
     };
-  }, []); */
-
-  const coaches = [
-    { name: "John Smith", email: "my email", phone: "235252355" },
-    { name: "John Smith", email: "my email", phone: "235252355" },
-    { name: "John Smith", email: "my email", phone: "235252355" },
-  ];
+  }, []);
 
   return (
     <div>

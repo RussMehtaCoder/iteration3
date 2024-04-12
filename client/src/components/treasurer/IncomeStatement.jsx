@@ -1,14 +1,41 @@
+import { useEffect, useState } from "react";
+import paymentService from "../../services/paymentService";
+
 const IncomeStatement = () => {
-  const payments = [
+  const [payments, setPayments] = useState([
     { date: "2022-01-02", amount: 80 },
     { date: "2022-02-02", amount: 80 },
-  ];
+  ]);
 
-  const expenses = [
+  const [expenses, setExpenses] = useState([
     { date: "2022-01-02", amount: 30 },
     { date: "2022-02-02", amount: 30 },
     { date: "2022-03-02", amount: 30 },
-  ];
+  ]);
+
+  useEffect(() => {
+    const loadFees = async () => {
+      const { data } = await paymentService.getFees("treasurer");
+      setExpenses(data);
+    };
+    loadFees();
+    return () => {
+      //cleanup so rendered fees removed right away
+      setExpenses([]);
+    };
+  }, []);
+
+  useEffect(() => {
+    const loadFees = async () => {
+      const { data } = await paymentService.getTreasurerIncome();
+      setPayments(data);
+    };
+    loadFees();
+    return () => {
+      //cleanup so rendered fees removed right away
+      setExpenses([]);
+    };
+  }, []);
 
   // Group payments and expenses by month
   const groupByMonth = (arr) => {

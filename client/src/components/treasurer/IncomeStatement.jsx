@@ -29,7 +29,7 @@ const IncomeStatement = () => {
   const months = Array.from({ length: 4 }, (_, i) => i);
 
   return (
-    <div className="p-6">
+    <div className="p-6 w-1/2">
       <h1 className="text-center">Monthly Income</h1>
       <div className="p-6 flex gap-3">
         {months.map((month, index) => (

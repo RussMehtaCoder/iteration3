@@ -9,9 +9,10 @@ const create = async (newObject) => {
   });
 };
 
-const getFees = async (id) => {
+const getExpenses = async () => {
+  //this service should return paid payments by the treasurer
   const token = await auth.currentUser.getIdToken();
-  const url = `${baseUrl}/${id}`;
+  const url = `${baseUrl}/treasurer?status=paid`;
   return axios.get(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -33,9 +34,42 @@ const getTreasurerIncome = async () => {
   });
 };
 
+const getTreasurerCoachPayments = async () => {
+
+  //may take query parameters: paysFor=hall/coach and status=paid/unpaid
+
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/treasurer?paysFor=coach&status=paid`;
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const getTreasurerHallPayments = async () => {
+
+  //may take query parameters: paysFor=hall/coach and status=paid/unpaid
+
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/treasurer?paysFor=coach&status=paid`;
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const conductPayment = async (paymentId) => {
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/${paymentId}/pay`;
+  return axios.post(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 export default {
-  getFees,
+  getExpenses,
   create,
   update,
   getTreasurerIncome,
+  getTreasurerCoachPayments,
+  getTreasurerHallPayments,
+  conductPayment
 };

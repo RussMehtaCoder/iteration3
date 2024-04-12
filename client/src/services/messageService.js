@@ -10,9 +10,10 @@ const getAll = async () => {
   });
 };
 
-const create = async (id, body) => {
+const create = async (body) => {
+  //only needs valid body with text and valid receiver id
   const token = await auth.currentUser.getIdToken();
-  const url = `${baseUrl}${id}/messages/`;
+  const url = `${baseUrl}`;
   return axios.post(url, body, {
     headers: { Authorization: `Bearer ${token}` },
   });

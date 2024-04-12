@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import userService from "../../services/userService";
+import sessionService from "../../services/sessionService";
 
 const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
   const [coaches, setCoaches] = useState([]);
@@ -16,9 +17,15 @@ const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
     };
   }, []);
 
-  const setCoach = (coach) => {
+  const setCoach = async (coach) => {
     //make coach the new coach of selectedSession
-    selectedSession.coach = coach.name;
+
+    //service call to update coach
+    const { data } = await sessionService.updateSessionCoach(selectedSession._id, { coachId: coach._id });
+
+    //need to refresh sessions list after service call
+
+    selectedSession.coach = coach.name; // this should be commented out when service call works and state rerenders
     setCoachSelect(false);
   };
 

@@ -15,7 +15,7 @@ const IncomeStatement = () => {
 
   useEffect(() => {
     const loadFees = async () => {
-      const { data } = await paymentService.getFees("treasurer");
+      const { data } = await paymentService.getExpenses;
       setExpenses(data);
     };
     loadFees();

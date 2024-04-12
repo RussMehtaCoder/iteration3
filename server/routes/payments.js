@@ -16,8 +16,9 @@ router.get('/treasurer', catchAsync(payments.getTreasurerPayments));
 
 router.get('/treasurer/income', catchAsync(payments.getTreasurerIncome));
 
-//TODO
-router.get('/member', catchAsync(payments.getMemberPayments)); // RERUIRES FIREBASE USER ID FETCH
+router.get('/member', catchAsync(payments.getMemberPayments));
+
+router.post('/:id/pay', catchAsync(payments.pay));
 
 router.post('/', catchAsync(payments.createPayment));
 

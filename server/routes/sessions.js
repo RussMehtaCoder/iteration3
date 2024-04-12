@@ -23,4 +23,6 @@ router.put('/:id/attendees/add', catchAsync(sessions.addSessionAttendee));
 
 router.put('/:id/attendees/remove', catchAsync(sessions.removeSessionAttendee));
 
+router.post('/:id/signup', catchAsync(sessions.memberSignup));
+
 module.exports = router;

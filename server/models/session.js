@@ -9,7 +9,7 @@ const sessionSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
-        }
+        },
     ],
     coach: {
         type: mongoose.Schema.Types.ObjectId,

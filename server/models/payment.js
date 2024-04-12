@@ -36,7 +36,7 @@ const paymentSchema = new mongoose.Schema(
 
     paysFor: {
       type: String,
-      enum: ['session', 'coach', 'hall'],
+      enum: ['session', 'coach', 'hall', 'lateFee'],
       required: true
     },
 

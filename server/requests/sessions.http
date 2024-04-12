@@ -1,0 +1,23 @@
+GET http://localhost:3000/sessions/
+
+###
+
+POST http://localhost:3000/sessions/
+content-type: application/json
+
+{
+    "date": "2024-05-01T19:00:00.000Z",
+    "coach": "661833b94bcc6d0941c4b8d5"
+}
+
+###
+
+POST http://localhost:3000/sessions/
+content-type: application/json
+
+{
+    "date": "2024-05-08T19:00:00.000Z",
+    "coach": "661833b94bcc6d0941c4b8d5"
+}
+
+###

@@ -1,5 +1,6 @@
 const express = require('express');
 const messages = require('../controllers/messages');
+const catchAsync = require('../utils/catchAsync');
 
 const router = express.Router();
 

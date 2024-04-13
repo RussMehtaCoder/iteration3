@@ -1,4 +1,5 @@
 import { useState } from "react";
+import paymentService from "../services/paymentService";
 
 const PaymentFormTreasurer = ({
   payment,
@@ -14,10 +15,10 @@ const PaymentFormTreasurer = ({
     setCardNumber(e.target.value);
   };
 
-  const handleConfirmPayment = () => {
+  const handleConfirmPayment = async () => {
     console.log("Payment confirmed!");
-    console.log(groupedCoachExpenses);
-    console.log(groupedHallExpenses);
+    await paymentService.conductPayment(payment._id);
+    //below to update UI without waiting for server
     const newGroupedHallExpenses = Object.keys(groupedHallExpenses).reduce(
       (acc, month) => {
         acc[month] = groupedHallExpenses[month].filter(

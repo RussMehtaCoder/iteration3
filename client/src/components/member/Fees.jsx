@@ -7,15 +7,11 @@ import paymentService from "../../services/paymentService";
 
 function Fees() {
   const userDoc = useContext(UserDocContext);
-  const [fees, setFees] = useState([
-    { id: "2", paysFor: "session", amount: "$20" },
-    { id: "2", paysFor: "lateFee", amount: "$30" },
-    { id: "2", paysFor: "session", amount: "$20" },
-  ]);
+  const [fees, setFees] = useState([]);
 
   useEffect(() => {
     const loadFees = async () => {
-      const { data } = await paymentService.getFees(userDoc.id);
+      const { data } = await paymentService.getMemberPayments();
       setFees(data);
     };
     loadFees();

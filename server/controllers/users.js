@@ -65,7 +65,7 @@ module.exports.getUserFirebaseUID = async (req, res) => {
 module.exports.getMembers = async (req, res) => {
   //fetch all users with role member
   const members = await User.find({ role: "member" }).select(
-    "firstName lastName email classesPaidFor classesAttended"
+    "firstName lastName number phoneNumber email classesPaidFor classesAttended"
   );
   res.json(members);
 };

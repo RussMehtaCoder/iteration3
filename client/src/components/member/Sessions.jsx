@@ -6,29 +6,7 @@ import sessionService from "../../services/sessionService";
 
 function Sessions() {
   const userDoc = useContext(UserDocContext);
-  const [sessions, setSessions] = useState([
-    {
-      date: "4/3/2024",
-      coach: "John",
-      attendees: [],
-    },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: [],
-    },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: [],
-    },
-    { date: "5/2/2024", coach: "Mya", attendees: [] },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: [],
-    },
-  ]);
+  const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
     const loadSessions = async () => {
@@ -36,7 +14,8 @@ function Sessions() {
       setSessions(data);
     };
     loadSessions();
-    return () => {  //cleanup so rendered fees removed right away
+    return () => {
+      //cleanup so rendered fees removed right away
       setSessions([]);
     };
   }, []);
@@ -45,6 +24,7 @@ function Sessions() {
     e.target.innerText = "Signed";
     e.target.style.backgroundColor = "black";
     //service to add user to that session
+    sessionService.signUpMember(session._id);
     //service to add unpaid user payment $20 for session
     console.log(session);
     session.attendees.push(userDoc._id);
@@ -65,7 +45,19 @@ function Sessions() {
   };
 
   const isUserSignedUp = (session) => {
-    return session.attendees.includes(userDoc._id);
+    return session.attendees.some((attendee) => attendee._id === userDoc._id);
+  };
+
+  const formatDate = (uglyDate) => {
+    const date = new Date(uglyDate);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const year = date.getFullYear();
+
+    const formattedDate = `${month}/${day}/${year}`;
+
+    return formattedDate;
   };
 
   return (
@@ -87,8 +79,8 @@ function Sessions() {
             return (
               <li key={index} className="flex justify-center">
                 <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
-                  <div>{session.date}</div>
-                  <div>Sensei {session.coach}</div>
+                  <div>{formatDate(session.date)}</div>
+                  <div>Sensei {session.coach.firstName}</div>
                   {isUserSignedUp(session) ? (
                     <button className="bg-black hover:bg-red-900 text-white font-bold py-1 px-4 rounded">
                       Signed

@@ -9,10 +9,18 @@ const create = async (newObject) => {
   });
 };
 
+const getMemberPayments = async () => {
+  const token = await auth.currentUser.getIdToken();
+  const url = `${baseUrl}/member`;
+  return axios.get(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 const getExpenses = async () => {
   //this service should return paid payments by the treasurer
   const token = await auth.currentUser.getIdToken();
-  const url = `${baseUrl}/treasurer?status=paid`;
+  const url = `${baseUrl}/treasurer?`;
   return axios.get(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -34,23 +42,21 @@ const getTreasurerIncome = async () => {
   });
 };
 
-const getTreasurerCoachPayments = async () => {
-
+const getTreasurerCoachPayments = async (status) => {
   //may take query parameters: paysFor=hall/coach and status=paid/unpaid
 
   const token = await auth.currentUser.getIdToken();
-  const url = `${baseUrl}/treasurer?paysFor=coach&status=paid`;
+  const url = `${baseUrl}/treasurer?paysFor=coach&status=${status}`;
   return axios.get(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-const getTreasurerHallPayments = async () => {
-
+const getTreasurerHallPayments = async (status) => {
   //may take query parameters: paysFor=hall/coach and status=paid/unpaid
 
   const token = await auth.currentUser.getIdToken();
-  const url = `${baseUrl}/treasurer?paysFor=coach&status=paid`;
+  const url = `${baseUrl}/treasurer?paysFor=hall&status=${status}`;
   return axios.get(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -59,17 +65,22 @@ const getTreasurerHallPayments = async () => {
 const conductPayment = async (paymentId) => {
   const token = await auth.currentUser.getIdToken();
   const url = `${baseUrl}/${paymentId}/pay`;
-  return axios.post(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-}
+  return axios.post(
+    url,
+    {},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
 
 export default {
   getExpenses,
   create,
+  getMemberPayments,
   update,
   getTreasurerIncome,
   getTreasurerCoachPayments,
   getTreasurerHallPayments,
-  conductPayment
+  conductPayment,
 };

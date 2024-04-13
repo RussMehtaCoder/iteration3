@@ -1,21 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PaymentForm from "../PaymentFormTreasurer";
+import paymentService from "../../services/paymentService";
 
 const Unpaid = () => {
   //fetch payments that
-  const hallExpenses = [
-    { date: "2022-01-02", amount: 30 },
-    { date: "2022-02-02", amount: 30 },
-    { date: "2022-03-02", amount: 30 },
-  ];
+  const [hallExpenses, setHallExpenses] = useState(null);
+  const [coachExpenses, setCoachExpenses] = useState(null);
+  const [groupedHallExpenses, setGroupedHallExpenses] = useState(null);
+  const [groupedCoachExpenses, setGroupedCoachExpenses] = useState(null);
 
-  const coachExpenses = [
-    { date: "2022-01-02", amount: 10 },
-    { date: "2022-01-02", amount: 10 },
-    { date: "2022-02-02", amount: 10 },
-    { date: "2022-03-02", amount: 10 },
-    { date: "2022-03-02", amount: 10 },
-  ];
+  useEffect(() => {
+    const loadHallFees = async () => {
+      const { data } = await paymentService.getTreasurerHallPayments("unpaid");
+      setHallExpenses(data);
+    };
+    const loadCoachFees = async () => {
+      const { data } = await paymentService.getTreasurerCoachPayments("unpaid");
+      setCoachExpenses(data);
+    };
+
+    loadHallFees();
+    loadCoachFees();
+    return () => {
+      //cleanup so rendered fees removed right away
+      setHallExpenses([]);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hallExpenses) {
+      setGroupedHallExpenses(groupByMonth(hallExpenses));
+    }
+    if (coachExpenses) {
+      setGroupedCoachExpenses(groupByMonth(coachExpenses));
+    }
+  }, [hallExpenses, coachExpenses]);
 
   const groupByMonth = (expenses) => {
     return expenses.reduce((acc, expense) => {
@@ -30,12 +49,6 @@ const Unpaid = () => {
     }, {});
   };
 
-  const [groupedHallExpenses, setGroupedHallExpenses] = useState(
-    groupByMonth(hallExpenses)
-  );
-  const [groupedCoachExpenses, setGroupedCoachExpenses] = useState(
-    groupByMonth(coachExpenses)
-  );
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -47,37 +60,39 @@ const Unpaid = () => {
   return (
     <div className="w-1/2 p-6 px-28 flex flex-col gap-3 text-center">
       <h1>Unpaid Expenses</h1>
-      {Object.keys(groupedHallExpenses).map((month) => (
-        <div key={month} className="">
-          <h2>{month}</h2>
-          {groupedHallExpenses[month].map((expense, index) => (
-            <div key={index} className="flex justify-between p-1">
-              Hall Expense: {expense.amount}
-              <button
-                className="w-20 bg-red-200 p-0.5 rounded"
-                onClick={() => {
-                  handlePayClick(expense);
-                }}
-              >
-                Pay
-              </button>
-            </div>
-          ))}
-          {groupedCoachExpenses[month].map((expense, index) => (
-            <div key={index} className="flex justify-between p-1">
-              Coach Expense: {expense.amount}
-              <button
-                className="w-20 bg-red-200 p-0.5 rounded"
-                onClick={() => {
-                  handlePayClick(expense);
-                }}
-              >
-                Pay
-              </button>
-            </div>
-          ))}
-        </div>
-      ))}
+      {groupedHallExpenses &&
+        groupedCoachExpenses &&
+        Object.keys(groupedHallExpenses).map((month) => (
+          <div key={month} className="">
+            <h2>{month}</h2>
+            {groupedHallExpenses[month].map((expense, index) => (
+              <div key={index} className="flex justify-between p-1">
+                Hall Expense: {expense.amount}
+                <button
+                  className="w-20 bg-red-200 p-0.5 rounded"
+                  onClick={() => {
+                    handlePayClick(expense);
+                  }}
+                >
+                  Pay
+                </button>
+              </div>
+            ))}
+            {groupedCoachExpenses[month].map((expense, index) => (
+              <div key={index} className="flex justify-between p-1">
+                Coach Expense: {expense.amount}
+                <button
+                  className="w-20 bg-red-200 p-0.5 rounded"
+                  onClick={() => {
+                    handlePayClick(expense);
+                  }}
+                >
+                  Pay
+                </button>
+              </div>
+            ))}
+          </div>
+        ))}
       {showPaymentForm && (
         <PaymentForm
           payment={selectedPayment}

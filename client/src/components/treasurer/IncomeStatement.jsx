@@ -2,20 +2,12 @@ import { useEffect, useState } from "react";
 import paymentService from "../../services/paymentService";
 
 const IncomeStatement = () => {
-  const [payments, setPayments] = useState([
-    { date: "2022-01-02", amount: 80 },
-    { date: "2022-02-02", amount: 80 },
-  ]);
-
-  const [expenses, setExpenses] = useState([
-    { date: "2022-01-02", amount: 30 },
-    { date: "2022-02-02", amount: 30 },
-    { date: "2022-03-02", amount: 30 },
-  ]);
+  const [payments, setPayments] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     const loadFees = async () => {
-      const { data } = await paymentService.getExpenses;
+      const { data } = await paymentService.getExpenses();
       setExpenses(data);
     };
     loadFees();
@@ -66,12 +58,23 @@ const IncomeStatement = () => {
                 month: "long",
               })}
             </h2>
-            <h3 className="">Revenue: {paymentsByMonth[month]?.total || 0}</h3>
-            <h3 className="">Expenses: {expensesByMonth[month]?.total || 0}</h3>
+            <h3 className="">Revenue: ${paymentsByMonth[month]?.total || 0}</h3>
+            <h3 className="">
+              Expenses: ${expensesByMonth[month]?.total || 0}
+            </h3>
             <h3 className="">
               Profit:{" "}
               {(paymentsByMonth[month]?.total || 0) -
-                (expensesByMonth[month]?.total || 0)}
+                (expensesByMonth[month]?.total || 0) >=
+              0
+                ? `$${
+                    (paymentsByMonth[month]?.total || 0) -
+                    (expensesByMonth[month]?.total || 0)
+                  }`
+                : `-$${Math.abs(
+                    (paymentsByMonth[month]?.total || 0) -
+                      (expensesByMonth[month]?.total || 0)
+                  )}`}
             </h3>
           </div>
         ))}

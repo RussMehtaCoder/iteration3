@@ -8,29 +8,7 @@ function Sessions() {
   const [coachSelect, setCoachSelect] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
   const [viewAttendees, setViewAttendees] = useState(false);
-  const [sessions, setSessions] = useState([
-    {
-      date: "4/3/2024",
-      coach: "John",
-      attendees: [],
-    },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: ["6618d47ddd5e7e25893081df"],
-    },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: ["6618d47ddd5e7e25893081df"],
-    },
-    { date: "5/2/2024", coach: "Mya", attendees: [] },
-    {
-      date: "4/29/2024",
-      coach: "Markus",
-      attendees: [],
-    },
-  ]);
+  const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
     const loadSessions = async () => {
@@ -56,6 +34,18 @@ function Sessions() {
     setViewAttendees(!viewAttendees);
   };
 
+  const formatDate = (uglyDate) => {
+    const date = new Date(uglyDate);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const year = date.getFullYear();
+
+    const formattedDate = `${month}/${day}/${year}`;
+
+    return formattedDate;
+  };
+
   return (
     <div className>
       <ul>
@@ -64,8 +54,8 @@ function Sessions() {
             return (
               <li key={index} className="flex justify-center">
                 <div className="w-1/2 flex justify-between m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
-                  <div>{session.date}</div>
-                  <div>Sensei {session.coach}</div>
+                  <div>{formatDate(session.date)}</div>
+                  <div>Sensei {session.coach.firstName}</div>
                   <div className="flex gap-5">
                     <button
                       onClick={() => changeCoach(session)}

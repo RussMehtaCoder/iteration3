@@ -7,6 +7,7 @@ const Members = () => {
     const loadMembers = async () => {
       const { data } = await userService.getMembers(); //or .name or .uid
       setMembers(data);
+      console.log(data);
     };
     loadMembers();
     return () => {
@@ -15,50 +16,7 @@ const Members = () => {
     };
   }, []);
 
-  const [members, setMembers] = useState([
-    {
-      name: "John Smith",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 4,
-    },
-    {
-      name: "Kdsv ss",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 6,
-    },
-    {
-      name: "John Kill",
-      phone: "235252355",
-      classesPaidFor: 5,
-      classesAttended: 6,
-    },
-    {
-      name: "May Smith",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 2,
-    },
-    {
-      name: "Mike Tin",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 1,
-    },
-    {
-      name: "Stew Jew",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 4,
-    },
-    {
-      name: "Fiona Michaels",
-      phone: "235252355",
-      classesPaidFor: 4,
-      classesAttended: 4,
-    },
-  ]);
+  const [members, setMembers] = useState([]);
 
   const sortByAttended = () => {
     setMembers(
@@ -118,8 +76,10 @@ const Members = () => {
             return (
               <li key={index} className="flex justify-center">
                 <div className="w-2/3 flex m-1 p-2 px-9 border-b border-gray-200 bg-white bg-opacity-50">
-                  <div className="w-32">{member.name}</div>
-                  <div className="w-32">{member.phone}</div>
+                  <div className="w-32">
+                    {member.firstName} {member.lastName}
+                  </div>
+                  <div className="w-32">{member.phoneNumber}</div>
                   <div className="w-32">{member.classesAttended}</div>
                   <div className="w-32">{member.classesPaidFor}</div>
                   <div className="w-32">

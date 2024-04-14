@@ -1,10 +1,12 @@
 import { useState } from "react";
+import messageService from "../services/messageService";
 
 const MessagePopUp = ({ receiver, setShowDraft }) => {
   const [message, setMessage] = useState("");
 
   const onSend = () => {
     //create the message with message state
+    messageService.create({ text: message, receiver: receiver._id });
     setShowDraft(false);
   };
 

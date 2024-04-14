@@ -4,14 +4,14 @@ import MemberPage from "./MemberPage";
 import CoachPage from "./CoachPage";
 import TreasurerPage from "./TreasurerPage";
 
-const MainPage = () => {
+const MainPage = ({ setUser }) => {
   const userDoc = useContext(UserDocContext);
   if (userDoc.role == "member") {
-    return <MemberPage />;
+    return <MemberPage setUser={setUser} />;
   } else if (userDoc.role == "coach") {
-    return <CoachPage />;
+    return <CoachPage setUser={setUser} />;
   } else if (userDoc.role == "treasurer") {
-    return <TreasurerPage />;
+    return <TreasurerPage setUser={setUser} />;
   }
 };
 

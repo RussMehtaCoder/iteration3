@@ -4,11 +4,11 @@ import Sessions from "../components/member/Sessions";
 import Fees from "../components/member/Fees";
 import Inbox from "../components/member/Inbox";
 
-function MemberPage() {
+function MemberPage({ setUser }) {
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar setUser={setUser} />
         <div className="mt-28">
           <Routes>
             <Route path="/sessions" element={<Sessions />} />

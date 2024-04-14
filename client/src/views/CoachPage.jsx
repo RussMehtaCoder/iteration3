@@ -4,11 +4,11 @@ import Sessions from "../components/coach/Sessions";
 import Members from "../components/coach/Members";
 import Inbox from "../components/coach/Inbox";
 
-function CoachPage() {
+function CoachPage({ setUser }) {
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar setUser={setUser} />
         <div className="mt-28">
           <Routes>
             <Route path="/sessions" element={<Sessions />} />

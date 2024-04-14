@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import userService from "../../services/userService";
+import messageService from "../../services/messageService";
 
 const Members = () => {
   useEffect(() => {
@@ -41,9 +42,12 @@ const Members = () => {
     );
   };
 
-  const alertMember = (name, e) => {
-    name;
+  const alertMember = (member, e) => {
     //create an alert message about late payments
+    messageService.create({
+      receiver: member._id,
+      text: "ALERT! Please pay your late payment(s)!",
+    });
     //messageService to create this POST request
     e.target.innerText = "Alerted";
     e.target.style.backgroundColor = "black";
@@ -89,7 +93,7 @@ const Members = () => {
                   </div>
                   {member.classesAttended - member.classesPaidFor > 0 ? (
                     <button
-                      onClick={(e) => alertMember(member.name, e)}
+                      onClick={(e) => alertMember(member, e)}
                       className=" w-20 bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-4 rounded flex justify-center"
                     >
                       Alert

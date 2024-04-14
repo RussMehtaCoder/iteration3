@@ -1,7 +1,7 @@
 import Logo from "../../assets/karatelogo.jpg";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ setUser }) => {
   return (
     <nav className="flex p-4 fixed top-0 w-full h-28 shadow-lg">
       <img src={Logo} alt="logo" className="w-20" />
@@ -16,6 +16,9 @@ const Navbar = () => {
           <Link to="/members">Members</Link>
         </li>
       </ul>
+      <button className="w-20" onClick={() => setUser(null)}>
+        Log Out
+      </button>
     </nav>
   );
 };

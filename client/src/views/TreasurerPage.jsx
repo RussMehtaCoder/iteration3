@@ -5,11 +5,11 @@ import Finances from "../components/treasurer/Finances";
 import Members from "../components/treasurer/Members";
 import Coaches from "../components/treasurer/Coaches";
 
-function TreasurerPage() {
+function TreasurerPage({ setUser }) {
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar setUser={setUser} />
         <div className="mt-28">
           <Routes>
             <Route path="/sessions" element={<Sessions />} />

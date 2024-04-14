@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import userService from "../../services/userService";
 import sessionService from "../../services/sessionService";
+import messageService from "../../services/messageService";
 
 const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
   const [coaches, setCoaches] = useState([]);
@@ -25,6 +26,11 @@ const CoachSelectPopUp = ({ setCoachSelect, selectedSession }) => {
       selectedSession._id,
       { coachId: coach._id }
     );
+
+    await messageService.create({
+      receiver: coach._id,
+      text: `You have been scheduled for ${formatDate(selectedSession.date)}`,
+    });
 
     //need to refresh sessions list after service call
 

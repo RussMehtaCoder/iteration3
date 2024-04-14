@@ -10,12 +10,16 @@ module.exports.getAll = async (req, res) => {
     .sort({ date: 1 });
 
   const role = req.query.role;
+
+  console.log(role);
   //if provided role=coach that indicates that need sessions for this coach
-  if (role) {
+  if (role === "coach") {
     sessions = sessions.filter(
-      (session) => session.coach.toString() === req.user._id.toString()
+      (session) => session.coach._id.toString() === req.user._id.toString()
     );
   }
+
+  console.log(sessions);
 
   res.json(sessions);
 };

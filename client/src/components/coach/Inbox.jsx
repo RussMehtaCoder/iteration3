@@ -3,15 +3,12 @@ import { useState } from "react";
 import messageService from "../../services/messageService";
 
 function Inbox() {
-  const [messages, setMessages] = useState([
-    "You have been scheduled for class on 5/3/2024",
-    "You have received a payment of $10 for the class on 4/9/2024",
-  ]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const loadMessages = async () => {
-      const { data } = await messageService.getAll();
-      setMessages(data);
+      const { data } = await messageService.getAll(); //or .name or .uid
+      setMessages(data.reverse());
     };
     loadMessages();
     return () => {
@@ -30,7 +27,7 @@ function Inbox() {
                 key={index}
                 className="p-3 border-b border-gray-200 bg-white bg-opacity-50"
               >
-                <div>{message}</div>
+                <div>{message.text}</div>
               </li>
             );
           })}
